@@ -2,7 +2,8 @@
 
 ## For everyone
 
-The car comes with a tow hook from the factory, it's located in the Tire Mobility Kit under the trunk floor.
+* The lug nut size is ?? mm. The tightening torque is ??.
+* The car comes with a tow hook from the factory, it's located in the Tire Mobility Kit under the trunk floor.
 
 ## For beginners
 
