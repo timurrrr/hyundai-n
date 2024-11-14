@@ -7,8 +7,9 @@
 
 ## For beginners
 
-TODO
+* TODO: Are the OEM brake pads and fluids sufficient?
 
 ## For experienced drivers
 
-TODO
+* TODO: Recommended alignment specs?
+* TODO: Recommended brake pad upgrades? Brake fluid?
