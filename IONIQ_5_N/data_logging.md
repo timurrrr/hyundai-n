@@ -87,6 +87,7 @@ Channel | OBD-II header | PID      | Equation | Notes
 ------- | ------------- | -------- | -------- | -----
 Accelerator position (%) | 0x7E2 | 0x22E004 | `bytesToUInt(raw, 10, 1) * 0.5` | It's a shame it's not a "free" channel!
 Battery level | (empty) | 0x220105 | `bytesToUInt(raw, 32, 1) * 0.5` | Another way to get battery level. Doesn't seem to be useful.
+Brake position (%) | 0x7D1 | 0x220104 | `bytesToUInt(raw, 39, 2) / 70.0` | Same scale as in the N Menu. It's a shame it's not a "free" channel!
 Steering angle | 0x730 | 0x22F010 | `bytesToIntLe(raw, 13, 2) * 0.1` |
 Tire pressure (FL) | 0x7A0 | 0x22C00B | `bytesToUInt(raw, 5, 1) * 1.3885254` | Value in kPA, RaceChrono then converts to psi if needed.
 Tire pressure (FR) | 0x7A0 | 0x22C00B | `bytesToUInt(raw, 10, 1) * 1.3885254` | Value in kPA, RaceChrono then converts to psi if needed.
