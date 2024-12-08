@@ -58,25 +58,35 @@ if you use the following setup with RaceChrono:
 Channel | OBD-II header | PID      | Equation | Notes
 ------- | ------------- | -------- | -------- | -----
 Air temperature | 0x7B3 | 0x220100 | `H * 0.5 - 40` | Value in degrees C, RaceChrono takes care of the conversion. Could be a slow channel, but same header/PID as Speed.
+Battery level | (empty) | 0x220101 | `bytesToUint(raw, 5, 1) * 0.5` | Could be a slow channel, but same header/PID as Power.
 Power (kW) | (empty)    | 0x220101 | `bytesToUInt(raw, 13, 2) * bytesToInt(raw, 11, 2) * 0.01` | Negative values for regen.
 Speed   | 0x7B3         | 0x220100 | `bytesToUInt(raw, 30, 1) / 3.6` | Curious how this works past 256 km/h :)
-
-**Slow channels:**
-
-Channel | OBD-II header | PID      | Equation | Notes
-------- | ------------- | -------- | -------- | -----
-Battery level | (empty) | 0x220105 | `bytesToUInt(raw, 32, 1) * 0.5` |
 
 ### Other channels
 
 Besides the channels recommended above, you might also find these useful:
 
+**"Free" channels:**
+
+These channels use the same header/PID values as the recommended ones, so they don't affect the overall refresh rate:
+
 Channel | OBD-II header | PID      | Equation | Notes
 ------- | ------------- | -------- | -------- | -----
 Battery current (A) | (empty) | 0x220101 | `bytesToInt(raw, 11, 2) * 0.1` | Negative values for regen.
+Battery temperature 1 | (empty) | 0x220101 | `bytesToInt(raw, 16, 1)` | This is the min temperature of the battery?
+Battery temperature 2 | (empty) | 0x220101 | `bytesToInt(raw, 15, 1)` | This is the max temperature of the battery?
 Battery voltage (V) | (empty) | 0x220101 | `bytesToUInt(raw, 13, 2 * 0.1` |
 Engine RPM (Front) | (empty) | 0x220101 | `bytesToInt(raw, 56, 2)` | Can drop to zero in e-Shift mode and when using ACC.
 Engine RPM (Rear) | (empty) | 0x220101 | `bytesToInt(raw, 54, 2)` |
+
+**"Expensive" channels:**
+
+These channels use different header/PID combinations, and thus adding them lowers the overall refresh rate:
+
+Channel | OBD-II header | PID      | Equation | Notes
+------- | ------------- | -------- | -------- | -----
+Accelerator position (%) | 0x7E2 | 0x22E004 | `bytesToUInt(raw, 10, 1) * 0.5` | It's a shame it's not a "free" channel!
+Battery level | (empty) | 0x220105 | `bytesToUInt(raw, 32, 1) * 0.5` | Another way to get battery level. Doesn't seem to be useful.
 Steering angle | 0x730 | 0x22F010 | `bytesToIntLe(raw, 13, 2) * 0.1` |
 Tire pressure (FL) | 0x7A0 | 0x22C00B | `bytesToUInt(raw, 5, 1) * 1.3885254` | Value in kPA, RaceChrono then converts to psi if needed.
 Tire pressure (FR) | 0x7A0 | 0x22C00B | `bytesToUInt(raw, 10, 1) * 1.3885254` | Value in kPA, RaceChrono then converts to psi if needed.
