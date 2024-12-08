@@ -14,11 +14,15 @@ steering wheel.
 Some cars expose the data from the CAN bus on the OBD-II port, but some don't. I haven't personally
 verified whether the 5 N exposes the data, but based on second-hand knowledge it doesn't.
 
+
 TODO: Find good spot(s) to plug into the CAN bus, preferably without having to cut the wires / isolation.
 
 TODO: Find which CAN IDs and bytes map to what parameters.
 
 ## Data available via the OBD-II port
+
+Many lap timer apps (RaceChrono, Torque, etc.) allow reading data from the car's OBD-II port using
+custom PIDs and equations, and Bluetooth/OBD-II dongles such as OBDLink MX+ and OBDLink LX.
 
 The OBD-II port in the driver's footwell provides some data, but it's harder to find the data
 mapping, since OBD-II is a request/response protocol. You have to first find the right ECU to send a
@@ -35,4 +39,49 @@ OBD-II can still be useful for some slower changing parameters, such as air temp
 pressures, battery level, etc. They can also be useful to reference when deciphering the CAN bus for
 parameters that the driver doesn't directly control, e.g. battery current or voltage.
 
-TODO: add points on how to query various parameters via OBD-II.
+### Recommended channels for RaceChrono
+
+Given the really low overall refresh rate, it's recommended to use as few channels as possible.
+Note that if you already use a channel with a certain OBD-II header and PID, adding another channel
+to RaceChrono with the same OBD-II header and PID should not affect the refresh rate, as both
+channels will be decoded from the same OBD-II responses.
+
+When using lap timers / data loggers such as RaceChrono, it's very useful to have the speedometer
+data, as that allows automatically aligning the rest of the OBD-II data with the GPS data, thus
+improving the synchronization between those two sources.
+
+You can get the data like shown in [this](https://www.youtube.com/watch?v=v7Y9Sffpea4) video
+if you use the following setup with RaceChrono:
+
+**Fast channels:**
+
+Channel | OBD-II header | PID      | Equation | Notes
+------- | ------------- | -------- | -------- | -----
+Air temperature | 0x7B3 | 0x220100 | `H * 0.5 - 40` | Value in degrees C, RaceChrono takes care of the conversion. Could be a slow channel, but same header/PID as Speed.
+Power (kW) | (empty)    | 0x220101 | `bytesToUInt(raw, 13, 2) * bytesToInt(raw, 11, 2) * 0.01` | Negative values for regen.
+Speed   | 0x7B3         | 0x220100 | `bytesToUInt(raw, 30, 1) / 3.6` | Curious how this works past 256 km/h :)
+
+**Slow channels:**
+
+Channel | OBD-II header | PID      | Equation | Notes
+------- | ------------- | -------- | -------- | -----
+Battery level | (empty) | 0x220105 | `bytesToUInt(raw, 32, 1) * 0.5` |
+
+### Other channels
+
+Besides the channels recommended above, you might also find these useful:
+
+Channel | OBD-II header | PID      | Equation | Notes
+------- | ------------- | -------- | -------- | -----
+Battery current (A) | (empty) | 0x220101 | `bytesToInt(raw, 11, 2) * 0.1` | Negative values for regen.
+Battery voltage (V) | (empty) | 0x220101 | `bytesToUInt(raw, 13, 2 * 0.1` |
+Engine RPM (Front) | (empty) | 0x220101 | `bytesToInt(raw, 56, 2)` | Can drop to zero in e-Shift mode and when using ACC.
+Engine RPM (Rear) | (empty) | 0x220101 | `bytesToInt(raw, 54, 2)` |
+Steering angle | 0x730 | 0x22F010 | `bytesToIntLe(raw, 13, 2) * 0.1` |
+Tire pressure (FL) | 0x7A0 | 0x22C00B | `bytesToUInt(raw, 5, 1) * 1.3885254` | Value in kPA, RaceChrono then converts to psi if needed.
+Tire pressure (FR) | 0x7A0 | 0x22C00B | `bytesToUInt(raw, 10, 1) * 1.3885254` | Value in kPA, RaceChrono then converts to psi if needed.
+Tire pressure (RL) | 0x7A0 | 0x22C00B | `bytesToUInt(raw, 15, 1) * 1.3885254` | Value in kPA, RaceChrono then converts to psi if needed.
+Tire pressure (RR) | 0x7A0 | 0x22C00B | `bytesToUInt(raw, 20, 1) * 1.3885254` | Value in kPA, RaceChrono then converts to psi if needed.
+
+TODO: add pointers to more things accessible via OBD-II.
+
