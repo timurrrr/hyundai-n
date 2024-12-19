@@ -73,6 +73,9 @@ When using lap timers / data loggers such as RaceChrono, it's very useful to hav
 as that allows automatically aligning the rest of the OBD-II data with the GPS data, thus improving
 the synchronization between those two sources.
 
+You can [download an OBD-II config file for RaceChrono](vehicle_hyundai_ioniq_5_n_20241218.rcz), or
+manually enter the channels as documented below.
+
 **Fast channels:**
 
 Channel | PID      | Equation | Notes
