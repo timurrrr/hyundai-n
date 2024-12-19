@@ -14,10 +14,30 @@ steering wheel.
 Some cars expose the data from the CAN bus on the OBD-II port, but some don't. I haven't personally
 verified whether the 5 N exposes the data, but based on second-hand knowledge it doesn't.
 
+### Ideal strategy
 
-TODO: Find good spot(s) to plug into the CAN bus, preferably without having to cut the wires / isolation.
+TODO: Find good spot(s) to plug into the CAN bus near the glovebox or the driver's footwell,
+preferably without having to cut the wires / isolation.
 
 TODO: Find which CAN IDs and bytes map to what parameters.
+
+### Alternative strategy
+
+Good people at comma.ai have found some CAN buses coming in to/out of the HDA front-facing cameras.
+[Here](https://github.com/commaai/neo/blob/master/car_harness/v3/Hyundai_Q_Harness.pdf) is the
+wiring diagram for their "Hyundai Q" harness. You can buy it at https://comma.ai/shop/car-harness
+
+If we can't find a more convenient spot, this might be an acceptable place to get data from the CAN
+bus.
+
+### CAN IDs and data mapping
+
+Good people at comma.ai have also posted a
+[dbc mapping](https://github.com/commaai/opendbc/blob/master/opendbc/dbc/hyundai_canfd.dbc)
+for Hyundai cars, I suspect there will be significant overlap with the protocols used by ECUs in the
+5 N.
+
+TODO: Verify and document key data channels.
 
 ## Data available via the OBD-II port
 
