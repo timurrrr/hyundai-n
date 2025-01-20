@@ -5,7 +5,7 @@
 * Lug nuts:
   * The lug nuts are *not hex*. The shape is sometimes referred to as "21 mm flower", and you need a
     socket such as [LASER 6716](https://www.amazon.com/dp/B01N7WMSX1).
-  * The wheel studs and lug nuts use M14x?? threads.
+  * The wheel studs and lug nuts use M14x1.5 threads.
   * The tightening torque is 176–196 N•m / 130–145 ft•lbs / 18-20 kg•m.
     * Interestingly, the 2025 US Owner's Manual lists two different torque spec ranges in different
       places. The lower one is in line with the torque specs typically suggested for M12 lug nuts
