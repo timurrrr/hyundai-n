@@ -39,6 +39,8 @@
 
 ## For experienced drivers
 
+* Tips for basic track prep from Grassroots Motorsports: [link](https://grassrootsmotorsports.com/news/one-lap-of-america-day-0-recap/).
+* Eibach 5.81260K front camber bolts are recommended in the same article.
 * Check out the [tips on data logging](data_logging.md).
 * TODO: Recommended alignment specs
 * TODO: Recommended brake pad upgrades? Brake fluid?
