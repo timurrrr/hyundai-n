@@ -26,6 +26,9 @@ TODO: Find which CAN IDs and bytes map to what parameters.
 Good people at comma.ai have found some CAN buses coming in to/out of the HDA front-facing cameras.
 [Here](https://github.com/commaai/neo/blob/master/car_harness/v3/Hyundai_Q_Harness.pdf) is the
 wiring diagram for their "Hyundai Q" harness. You can buy it at https://comma.ai/shop/car-harness
+[Here's](https://youtu.be/fUA4jLGPw8I?t=56) a brief overview of where that harness plugs in, I
+suppose one of the ends of the harness can be used to get access to CAN H/L, power and ground and
+thus can be repurposed as an OBD-II port for an off the shelf OBD-II dongle.
 
 If we can't find a more convenient spot, this might be an acceptable place to get data from the CAN
 bus.
