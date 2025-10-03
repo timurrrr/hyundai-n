@@ -131,3 +131,8 @@ Tire pressure (RR) | 0x7A0 | 0x22C00B | `highPass(bytesToUInt(raw, 20, 1), 1) * 
 
 TODO: add pointers to more things accessible via OBD-II.
 
+---
+
+If you found this page useful, consider donating so I can buy some beer/boba:
+
+[![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/donate?business=ZKULAWZFJKCES&item_name=Donation+to+support+the+hyundai-n+project+on+GitHub+(from+the+data+logging+page)&currency_code=USD)
